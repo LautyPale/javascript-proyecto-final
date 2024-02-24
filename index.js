@@ -1,75 +1,69 @@
-// Precios de Western Union
-
-const dolarAPeso = 1250
-const euroAPeso = 1300
-const realAPeso = 250
-const pesoADolar = 0.0008
-const pesoAEuro = 0.0007
-const pesoAReal = 0.0038
-
-let monedaSeleccionada = prompt("Ingresa a la moneda que desea convertir \n 1- Dolares a pesos \n 2- Pesos a dolares \n 3- Euros a pesos \n 4- Pesos a euros \n 5- Reales a pesos \n 6- Pesos a reales \n ESC - Salir")
-
-let cantidad = 0
-let total = 0
-
-let functionConvert = (monedaSeleccionada, cantMoneda) => monedaSeleccionada * cantMoneda
-
-while (monedaSeleccionada != 'ESC') {
-
-    switch (monedaSeleccionada) {
-        case '1':
-            cantidad = parseFloat( prompt("Ingresa la cantidad de dolares que deseas convertir a pesos") )
-            total = parseFloat( functionConvert (dolarAPeso, cantidad) ).toFixed(2)
-            break
-        case '2':
-            cantidad = parseFloat( prompt("Ingresa la cantidad de pesos que deseas convertir a dolares") )
-            total = parseFloat ( functionConvert (pesoADolar, cantidad) ).toFixed(4)
-            break
-        case '3':
-            cantidad = parseFloat( prompt("Ingresa la cantidad de euros que deseas convertir a pesos") )
-            total = parseFloat( functionConvert (euroAPeso, cantidad) ).toFixed(2)
-            break
-        case '4':
-            cantidad = parseFloat( prompt("Ingresa la cantidad de pesos que deseas convertir a euros") )
-            total = parseFloat ( functionConvert (pesoAEuro, cantidad) ).toFixed(4)
-            break
-        case '5':
-            cantidad = parseFloat( prompt("Ingresa la cantidad de reales que deseas convertir a pesos") )
-            total = parseFloat ( functionConvert (realAPeso, cantidad) ).toFixed(2)
-            break
-        case '6':
-            cantidad = parseFloat( prompt("Ingresa la cantidad de pesos que deseas convertir a reales") )
-            total = parseFloat ( functionConvert (pesoAReal, cantidad) ).toFixed(4)
-            break
-        case 'ESC':
-            break
-        default:
-            alert("Ingreso un valor no valido")
-            break
+function obtenerTipoDeCambio(monedaOrigen, monedaDestino) { // pido la monedaOrigen y la monedaDestino
+    const tipoDeCambio = { // Realizo un objeto con los tipos de cambio y su propio valor (1) para evitar errores al pedirle la monedaOrigen o monedaDestino
+        "EUR": { 
+            "USD": 1.08,
+            "BRL": 5.41,
+            "ARS": 907.56,
+            "EUR": 1
+        },
+        "USD": {
+            "EUR": 0.92,
+            "BRL": 5.00,
+            "ARS": 837.50,
+            "USD": 1
+        },
+        "BRL": {
+            "EUR": 0.18,
+            "USD": 0.20,
+            "ARS": 167.98,
+            "BRL": 1
+        },
+        "ARS": {
+            "EUR": 0.0011,
+            "USD": 0.0012,
+            "BRL": 0.0060,
+            "ARS": 1
+        },
     }
 
-    if (total != 0) {
-        alert("El total convertido es: " + total)
-    }
-
-    total = 0
-
-    monedaSeleccionada = prompt("Ingresa a la moneda que desea convertir \n 1- Dolares a pesos \n 2- Pesos a dolares \n 3- Euros a pesos \n 4- Pesos a euros \n 5- Reales a pesos \n 6- Pesos a reales \n ESC - Salir")
-
+    //return tipoDeCambio [monedaOrigen][monedaDestino] // retorno el valor de la moneda que elija el usuario
 }
 
+function convertirMoneda(cantMoneda, monedaOrigen, monedaDestino) {
+    const tipoDeCambio = obtenerTipoDeCambio(monedaOrigen, monedaDestino)
+    return cantMoneda * tipoDeCambio
+}
 
+function mostrarResultado(cantMoneda, monedaOrigen, monedaDestino, resultado) { 
+    // cantMoneda = cantidad a convertir
+    // monedaOrigen = moneda que elija el usuario
+    // monedaDestino = moneda que elija el usuario
+    // resultado = utilizo la funcion convertirMoneda
+    alert(`La cantidad de ${cantMoneda} ${monedaOrigen} equivalen a ${resultado.toFixed(2)} ${monedaDestino}`) // .toFixed es para redondear el resultado
+}
 
+// Inicializo las variables
 
+let monedaOrigen;
+let monedaDestino;
+let cantidad;
 
+do { // pido la moneda que quiere convertir el usuario
+    monedaOrigen = prompt("Ingrese la moneda de origen (EUR, USD, BRL, ARS):").toUpperCase();
+    if (!["EUR", "USD", "BRL", "ARS"].includes(monedaOrigen)) { // .includes es para saber si monedaOrigen tiene el elemento (EUR, USD, BRL, ARS) y confirmar que no sea falso
+        alert("La moneda que desea convertir no es válida. Por favor, ingrese una moneda válida (EUR, USD, BRL, ARS).")
+    }
+} while (!["EUR", "USD", "BRL", "ARS"].includes(monedaOrigen));
 
+do { // pido la moneda a la que quiere convertir el usuario
+    monedaDestino = prompt("Ingrese la moneda de destino (EUR, USD, BRL, ARS):").toUpperCase();
+    if (!["EUR", "USD", "BRL", "ARS"].includes(monedaDestino)) {
+        alert("La moneda que desea convertir no es válida. Por favor, ingrese una moneda válida (EUR, USD, BRL, ARS).")
+    }
+} while (!["EUR", "USD", "BRL", "ARS"].includes(monedaDestino));
 
+cantidad = parseFloat(prompt("Ingresa la cantidad que deseas convertir")) // parseFloat para convertir a entero
 
+const resultado = convertirMoneda(cantidad, monedaOrigen, monedaDestino)
 
-
-
-
-
-
-
-
+mostrarResultado(cantidad, monedaOrigen, monedaDestino, resultado)
