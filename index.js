@@ -26,7 +26,7 @@ function obtenerTipoDeCambio(monedaOrigen, monedaDestino) { // pido la monedaOri
         },
     }
 
-    //return tipoDeCambio [monedaOrigen][monedaDestino] // retorno el valor de la moneda que elija el usuario
+    return tipoDeCambio [monedaOrigen][monedaDestino] // retorno el valor de la moneda que elija el usuario
 }
 
 function convertirMoneda(cantMoneda, monedaOrigen, monedaDestino) {
