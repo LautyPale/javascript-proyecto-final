@@ -78,27 +78,8 @@ while (menu !== '0') {
             }
         } while (!["EUR", "USD", "BRL", "ARS"].includes(monedaAConvertir));
 
-        cantidad = parseFloat(prompt("Ingresa la cantidad que deseas convertir"));
+cantidad = parseFloat(prompt("Ingresa la cantidad que deseas convertir")) // parseFloat para convertir a entero
 
-        resultado = convertirMoneda(monedaElegida, monedaAConvertir, cantidad, guardarHistorial);
-        alert(`El resultado de la conversión es: ${resultado}`);
+const resultado = convertirMoneda(cantidad, monedaOrigen, monedaDestino)
 
-    }
-
-    if (menu === '2') {
-        historial.forEach(element => {
-            mensaje = mensaje + `$${element.cantidadMonedaElegida} ${element.monedaElegida} = $${element.resultado} ${element.monedaAConvertir} \n`
-        })
-
-        alert(mensaje)
-    }
-
-    if (menu === '0') {
-        alert("Hasta pronto!")
-    }
-
-    if (menu !== '1' && menu !== '2' && menu !== '0') {
-        alert("Opción inválida. Por favor, ingrese una opción válida.")
-    }
-    
-}
+mostrarResultado(cantidad, monedaOrigen, monedaDestino, resultado)
