@@ -3,9 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="./src/output.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Conversor</title>
 </head>
-<body>
-    <script src="index.js"></script>
+<body class="h-screen bg-gray-900">
+
+    <main class="w-full h-[100vh] flex flex-col justify-center items-center">
+
+        <div id="container" class="flex flex-col gap-y-8 p-8 rounded-xl border-2 border-grey-800 shadow-xl bg-slate-800">
+            <h2 class="text-3xl text-white text-center">Conversor de Divisas</h2>
+                
+            <form class="max-w-sm mx-auto">
+
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+
+                    <div>
+
+                    <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Importe</label>
+                    <input type="number" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0" required />
+
+                    </div>
+
+                    <div>
+
+                        <label for="old-currency" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">De</label>
+                        <select id="old-currency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected>USD</option>
+                            <option value="ARS">ARS</option>
+                            <option value="EUR">EUR</option>
+                            <option value="BRL">BRL</option>
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label for="result" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Resultado</label>
+                        <input readonly type="number" id="result" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0"/>
+
+                    </div>
+
+                    <div>
+
+                        <label for="new-currency" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A</label>
+                        <select id="new-currency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="USD">USD</option>
+                            <option selected>ARS</option>
+                            <option value="EUR">EUR</option>
+                            <option value="BRL">BRL</option>
+                        </select>
+
+                    </div>
+
+                    <div></div>
+                    <div></div>
+
+                    <div>
+
+                        <button id="convert-button" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Convertir</button>
+
+                    </div>
+                    
+                    <div>
+
+                        <button id="history-button" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Historial</button>
+
+                    </div>
+
+                </div>
+
+
+            </form>
+    
+            <div id="history-div"></div>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="./js/constants.js"></script>
+        <script src="./js/functions.js"></script>
+        <script src="./js/events.js"></script>
+        
+    </main>
+
 </body>
 </html>
