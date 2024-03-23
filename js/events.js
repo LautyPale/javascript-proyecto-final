@@ -32,9 +32,7 @@ convertButton.addEventListener('click', (event) => {
 
     const regex = /^[0-9]+(?:,[0-9]+)?(?:\.[0-9]+)?$/ // Valido que el input sea positivo y opcional numero con coma
 
-    console.log(amount.value)
-
-    if (isNaN(parseFloat(amount.value)) || !regex.test(amount.value) || parseFloat(amount.value) < 0) {
+    if (isNaN(parseFloat(amount.value)) || !regex.test(amount.value) || parseFloat(amount.value) <= 0) {
         Swal.fire({
             text: "Por favor, ingrese un importe válido.",
             icon: "error"
