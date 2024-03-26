@@ -1,5 +1,7 @@
 // events.js
 
+// Constantes y variables
+
 const convertButton = document.querySelector('#convert-button')
 const historyButton = document.querySelector('#history-button')
 
@@ -7,17 +9,18 @@ let amount = document.querySelector('#amount')
 let oldCurrency = document.querySelector('#old-currency')
 let newCurrency = document.querySelector('#new-currency')
 let result = document.querySelector('#result')
-let historial = [];
+let history = [];
 
 // Validacion de input
 
 amount.addEventListener('input', () => {
 
-    const numericValue = parseFloat(amount.value.replace(',', '.'));
+    let numericValue = parseFloat(amount.value.replace(',', '.'));
 
     if (numericValue > 999999999.99) {
         amount.value = '999999999.99'
     }
+
 })
 
 // Boton convertir
@@ -30,28 +33,27 @@ convertButton.addEventListener('click', (event) => {
     newCurrency = document.querySelector('#new-currency')
     result = document.querySelector('#result')
 
-    const regex = /^[0-9]+(?:,[0-9]+)?(?:\.[0-9]+)?$/ // Valido que el input sea positivo y opcional numero con coma
-
-    if (isNaN(parseFloat(amount.value)) || !regex.test(amount.value) || parseFloat(amount.value) <= 0) {
+    if (isNaN(parseFloat(amount.value)) || parseFloat(amount.value) <= 0) {
         Swal.fire({
             text: "Por favor, ingrese un importe válido.",
-            icon: "error"
+            icon: "info"
         })
     } else {
-        let resultado = convertirMoneda (oldCurrency.value, newCurrency.value, parseFloat(amount.value), guardarHistorial)
-        result.value = resultado
+        let resultOfConversion = currencyConverter (oldCurrency.value, newCurrency.value, parseFloat(amount.value), savedHistory)
+        result.value = resultOfConversion
         
-        historial = obtenerHistorial()
+        history = getHistory()
     }
 
 })
 
-// boton historial
+// boton history
 
 historyButton.addEventListener('click', (event) => {
     
     event.preventDefault()
-    historial = obtenerHistorial()
+    history = getHistory()
+    history.reverse()
     const container = document.querySelector('#container')
     let historyDiv = document.querySelector('#history-div')
 
@@ -64,10 +66,10 @@ historyButton.addEventListener('click', (event) => {
         historyDiv = document.createElement('div')
         historyDiv.setAttribute('id', 'history-div')
 
-        if (localStorage.getItem('historial') == '[]') {
+        if (localStorage.getItem('history') == '[]') {
 
             Swal.fire({
-                text: "No hay historial de conversiones.",
+                text: "No hay history de conversiones.",
                 icon: "info"
             })
 
@@ -77,9 +79,9 @@ historyButton.addEventListener('click', (event) => {
             newH2.innerHTML = `<h2 class="text-3xl text-white text-center mb-2">Historial</h2>`
             historyDiv.appendChild(newH2)
 
-            historial.forEach((element) => {
+            history.forEach((element) => {
                 const newH3 = document.createElement('h3')
-                newH3.innerHTML = `<h3 class="text-white">${element.monedaElegida} ${element.cantidadMonedaElegida} = ${element.monedaAConvertir} ${element.resultado}</h3>`
+                newH3.innerHTML = `<h3 class="text-white">${element.selectedCurrency} ${element.amountOfCurrency} = ${element.currencyToConvert} ${element.result}</h3>`
         
                 historyDiv.appendChild(newH3)
             })

@@ -2,43 +2,44 @@
 
 // Funcion para convertir divisas
 
-function convertirMoneda(monedaElegida, monedaAConvertir, cantidadMonedaElegida, guardarHistorial) {
+function currencyConverter(selectedCurrency, currencyToConvert, amountOfCurrency, savedHistory) {
   
-    const tipoCambioOrigen = tipoDeCambio[monedaElegida]
-    const tipoCambioDestino = tipoDeCambio[monedaAConvertir]
+    const exchangeRateOrigin = exchangeType[selectedCurrency]
+    const exchangeRateDestiny = exchangeType[currencyToConvert]
   
-    const cantidadConvertida = (cantidadMonedaElegida * tipoCambioOrigen) / tipoCambioDestino
+    const quantityConverted = (amountOfCurrency * exchangeRateOrigin) / exchangeRateDestiny
 
-    guardarHistorial(monedaElegida, monedaAConvertir, cantidadMonedaElegida, cantidadConvertida.toFixed(2), )
+    savedHistory(selectedCurrency, currencyToConvert, amountOfCurrency, quantityConverted.toFixed(2), )
 
-    return cantidadConvertida.toFixed(2)
+    return quantityConverted.toFixed(2)
 }
 
 // Funcion para obtener historial desde localstorage
 
-function obtenerHistorial() {
-    const historialGuardado = localStorage.getItem('historial')
-    return historialGuardado ? JSON.parse(historialGuardado) : [] // Si no hay historial devuelvo un array vacio
+function getHistory() {
+    const savedHistory = localStorage.getItem('history')
+    return savedHistory ? JSON.parse(savedHistory) : [] // Si no hay historial devuelvo un array vacio
 }
 
 // Funcion para guardar historial
 
-function guardarHistorial(monedaElegida, monedaAConvertir, cantidad, resultado) {
+function savedHistory(selectedCurrency, currencyToConvert, quantity, result) {
 
-    const historialGuardado = obtenerHistorial()
+    const savedHistory = getHistory()
 
-    if (historialGuardado.length >= 5) {
+    if (savedHistory.length >= 5) {
         
-        historialGuardado.shift(); // elimino el resultado mas antiguo
+        savedHistory.shift(); // elimino el resultado mas antiguo
     }
 
-    const historialConversion = {
-        monedaElegida: monedaElegida,
-        monedaAConvertir: monedaAConvertir,
-        cantidadMonedaElegida: cantidad,
-        resultado: resultado
+    const historyConversion = {
+        selectedCurrency: selectedCurrency,
+        currencyToConvert: currencyToConvert,
+        amountOfCurrency: quantity,
+        result: result
     }
 
-    historialGuardado.push(historialConversion)
-    localStorage.setItem('historial', JSON.stringify(historialGuardado))
+    savedHistory.push(historyConversion)
+    localStorage.setItem('history', JSON.stringify(savedHistory))
+
 }
